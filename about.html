@@ -1,0 +1,68 @@
+<!-- about.html -->
+<!DOCTYPE html>
+<html lang="es" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Acerca de - UVita Light</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="icon" href="assets/logo.svg" type="image/svg+xml" />
+</head>
+<body class="bg-gray-900 text-white min-h-screen flex flex-col">
+
+  <!-- ENCABEZADO -->
+  <header class="bg-gray-800 px-6 py-4 flex items-center gap-4 shadow">
+    <a href="index.html" class="flex items-center gap-2 hover:opacity-80">
+      <img src="assets/logo.svg" class="h-8 w-8" alt="Logo UVita" />
+      <h1 class="text-xl font-bold text-yellow-400">UVita Light</h1>
+    </a>
+  </header>
+
+  <!-- CONTENIDO -->
+  <main class="p-6 max-w-4xl mx-auto prose prose-invert">
+    <h2 class="text-yellow-400">Justificación del Proyecto</h2>
+    <p>
+      El cuidado de las plantas no es solo una afición decorativa, sino un compromiso con el medio ambiente.  
+      <strong>UVita Light</strong> nace con la intención de facilitar ese compromiso en los hogares modernos, integrando
+      el uso de energía solar y sistemas inteligentes de iluminación para fomentar un entorno sostenible y accesible.
+    </p>
+
+    <h2>Objetivo General</h2>
+    <p>
+      Desarrollar un sistema funcional que evite el uso de energía no renovable, aproveche paneles solares y fomente
+      el cuidado de plantas que requieren iluminación especializada como luz ultravioleta.
+    </p>
+
+    <h2>Objetivos Específicos</h2>
+    <ul>
+      <li>Diseñar una interfaz clara para controlar luces LED y UV desde el hogar.</li>
+      <li>Simular una estructura con batería alimentada por paneles solares.</li>
+      <li>Concientizar sobre el uso regulado de energía y su impacto ambiental.</li>
+      <li>Promover el cultivo responsable de plantas como cactus, suculentas y romero.</li>
+    </ul>
+
+    <h2>Funcionamiento General</h2>
+    <p>
+      Desde este panel web, el usuario puede simular el encendido de luces, consultar un historial de uso y visualizar
+      estadísticas sobre consumo estimado. Aunque por ahora no está conectado a hardware real, la estructura está lista
+      para integrarse con sistemas Arduino, sensores, módulos de batería y más.
+    </p>
+
+    <h2>Un paso hacia la autonomía ecológica</h2>
+    <p>
+      Este proyecto representa una semilla. Una pequeña, pero poderosa, idea para convertir nuestras casas en entornos
+      autosustentables, conectados con la naturaleza. Porque cada rayo solar aprovechado es una victoria frente al consumo inconsciente.
+    </p>
+  </main>
+
+  <!-- PIE DE PÁGINA -->
+  <footer class="text-center text-xs py-3 bg-gray-800 mt-auto">
+    &copy; <span id="año"></span> UVita Light • Creado con propósito ecológico.
+  </footer>
+
+  <script>
+    document.getElementById("año").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
