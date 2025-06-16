@@ -31,20 +31,68 @@ const graficoMinutos = new Chart(ctxMins,{
   data:{labels:dias, datasets:[{data:minutosSemana, backgroundColor:'#38bdf8'}]},
   options:{plugins:{legend:{display:false}}, scales:{y:{beginAtZero:true}}}
 });
+//------------contador asignado de veces de encendido y apagado de luces---------------
+let contadorHogar1 = 0;
+let contadorHogar2 = 0;
+let contadorUV = 0;
+let contadorHogar1apagado = 0;
+let contadorHogar2apagado = 0;
+let contadorUVapagado = 0;
+// ---------- contador de luces ----------
+function actualizarContadores(id, accion) {
+  if (accion === "encendido") {
+    switch(id) {
+      case "interruptor-hogar1":
+        contadorHogar1++;
+        return contadorHogar1;
+        break;
+      case "interruptor-hogar2":
+       contadorHogar2++;
+        return contadorHogar2;
+        break;
+      case "interruptor-uv":
+        contadorUV++;
+        return contadorUV;
+        break;
+    }
+  } else if (accion === "apagado") {
+    switch(id) {
+      case "interruptor-hogar1":
+        contadorHogar1apagado++;
+        
+        return contadorHogar1apagado;
+        break;
+      case "interruptor-hogar2":
+        
+        contadorHogar2apagado++;
+        return contadorHogar2apagado;
+        break;
+      case "interruptor-uv":
+        
+        contadorUVapagado++;
+        return contadorUVapagado;
+        break;
+    }
+  }
+  return 0; // si no es encendido ni apagado, retornar 0
+  }
 
 // ---------- helpers ----------
-function addLog(text){ 
+function addLog(text, contador, detalle) { 
   const tr=document.createElement('tr');
-  tr.innerHTML=`<td class="p-2">${dayjs().format('HH:mm')}</td><td class="p-2">${text}</td><td class="p-2">Simulado</td>`;
+  tr.innerHTML=`<td class="p-2">${dayjs().format('HH:mm')}</td><td class="p-2">${text}</td><td class="p-2">${detalle} por ${contador} vez</td>`;
   logsBody.prepend(tr);
 }
 
 // ---------- interruptores manuales ----------
-document.getElementById("interruptor-hogar").addEventListener("change",e=>{
-  addLog(e.target.checked?"Encendido Hogar":"Apagado Hogar");
+document.getElementById("interruptor-hogar1").addEventListener("change",e=>{
+  addLog(e.target.checked?"Encendido Luz 1":"Apagado Luz 1", e.target.checked?actualizarContadores("interruptor-hogar1", "encendido"):actualizarContadores("interruptor-hogar1", "apagado"), e.target.checked?"Encendido Luz 1":"Apagado Luz 1");
+});
+document.getElementById("interruptor-hogar2").addEventListener("change",e=>{
+  addLog(e.target.checked?"Encendido Luz 2":"Apagado Luz 2", e.target.checked?actualizarContadores("interruptor-hogar2", "encendido"):actualizarContadores("interruptor-hogar2", "apagado"), e.target.checked?"Encendido Luz 2":"Apagado Luz 2");
 });
 document.getElementById("interruptor-uv").addEventListener("change",e=>{
-  addLog(e.target.checked?"Encendido UV":"Apagado UV");
+  addLog(e.target.checked?"Encendido UV":"Apagado UV", e.target.checked?actualizarContadores("interruptor-uv","encendido"):actualizarContadores("interruptor-uv","apagado"), e.target.checked?"Encendido UV":"Apagado UV");
 });
 
 // ---------- programación ----------
