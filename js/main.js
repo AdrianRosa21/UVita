@@ -11,10 +11,29 @@ let minutosSemana = [30,45,22,50,15,10,35];
 let schedule = [];  // {dia:0-6, hora:"HH:mm", uv:boolean}
 const logsBody = document.getElementById("tabla-logs");
 
-// ---------- batería random ----------
-const batt = Math.floor(Math.random()*61)+40;
-document.getElementById("bateria-barra").style.width = batt+"%";
-document.getElementById("bateria-texto").textContent = batt+"%";
+
+// ---------- implementacion de carga de la bateria ----------
+function actualizarBateria(porcentaje) {
+  const barra = document.getElementById("bateria-barra");
+  const texto = document.getElementById("bateria-texto");
+
+  // Actualizar ancho y texto
+  barra.style.width = porcentaje + "%";
+  texto.textContent = porcentaje + "%";
+
+  // Limpiar clases previas
+  barra.classList.remove("bg-green-400", "bg-yellow-400", "bg-red-500");
+
+  // Aplicar color según nivel
+  if (porcentaje >= 60) {
+    barra.classList.add("bg-green-400");
+  } else if (porcentaje >= 30) {
+    barra.classList.add("bg-yellow-400");
+  } else {
+    barra.classList.add("bg-red-500");
+  }
+}
+
 
 // ---------- gráficos ----------
 const ctxEner = document.getElementById("grafico-energia").getContext("2d");
@@ -31,6 +50,43 @@ const graficoMinutos = new Chart(ctxMins,{
   data:{labels:dias, datasets:[{data:minutosSemana, backgroundColor:'#38bdf8'}]},
   options:{plugins:{legend:{display:false}}, scales:{y:{beginAtZero:true}}}
 });
+
+// ---------- cargar datos de consumo ----------
+// ------------ CARGAR DATOS REALES ------------ //
+function cargarDesdeBD() {
+  $.ajax({
+    url: "../UVita/php/data.php",
+    method: "GET",
+    dataType: "json",
+     cache: false,                 // Evita caché del navegador
+    success: res => {
+      /* ---------- 1. Alimento gráfico de energía ---------- */
+      // Fechas → etiquetas: HH:mm  (invertimos para ver de antiguo→nuevo)
+      const etiquetas = res.energia.map(e => dayjs(e.fecha).format("HH:mm")).reverse();
+      // % batería → «kWh»: convierto 100 % = 1.5 kWh (tú ajusta el factor)
+      const datosKwh = res.energia.map(e => +(e.porcentaje * 1.5 / 100).toFixed(2)).reverse();
+
+      graficoEnergia.data.labels = etiquetas;
+      graficoEnergia.data.datasets[0].data = datosKwh;
+      graficoEnergia.update();
+      actualizarBateria(res.bateria_actual);
+
+
+      /* ---------- 2. Ejemplo extra: minutos encendidos ---------- */
+      // Si mañana guardas minutos en BD, actualizas aquí igual que arriba
+      // graficoMinutos.data.labels = ...
+      // graficoMinutos.data.datasets[0].data = ...
+      // graficoMinutos.update();
+    },
+    error: err => console.error("AJAX FAIL:", err)
+  });
+}
+
+// Dispara carga al abrir la página
+cargarDesdeBD();
+// Actualiza cada 15 segundos (simulación de datos en tiempo real)
+setInterval(cargarDesdeBD, 15000);
+
 //------------contador asignado de veces de encendido y apagado de luces---------------
 let contadorHogar1 = 0;
 let contadorHogar2 = 0;
