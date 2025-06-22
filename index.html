@@ -86,10 +86,11 @@
 
         <div class="flex items-center justify-between my-2">
           <div class="flex items-center gap-2 text-gray-700">
-            <i data-lucide="sunrise" class="text-purple-500 w-5 h-5"></i>
-            <span>Luz Ultravioleta</span>
+            <i data-lucide="sun" class="text-yellow-400 w-5 h-5"></i>
+            <span>Luz LED 3</span>
           </div>
-          <input type="checkbox" id="interruptor-uv" class="w-5 h-5 accent-purple-500">
+          <input type="checkbox" id="interruptor-hogar3" class="w-5 h-5 accent-primary-500">
+
         </div>
       </div>
 
@@ -104,10 +105,19 @@
             <option value="6">Sábado</option>
           </select>
           <input type="time" id="hora-input" class="bg-gray-50 border border-gray-200 p-2 rounded text-gray-700" />
-          <label class="flex items-center gap-2 text-gray-700">
-            <input type="checkbox" id="uv-checkbox" class="accent-purple-500" />
-            Luz UV
-          </label>
+          <label for="luz-select" class="text-gray-700">Selecciona la luz:</label>
+<select id="luz-select" class="bg-gray-50 border border-gray-200 p-2 rounded text-gray-700">
+  <option value="1">Luz LED 1</option>
+  <option value="2">Luz LED 2</option>
+  <option value="3">Luz LED 3</option>
+</select>
+<label for="accion-select" class="text-gray-700">Acción:</label>
+<select id="accion-select" class="bg-gray-50 border border-gray-200 p-2 rounded text-gray-700">
+  <option value="ON">Encender</option>
+  <option value="OFF">Apagar</option>
+</select>
+
+
           <button class="bg-primary-500 hover:bg-primary-600 text-white py-1 rounded font-semibold transition-colors">
             Agendar
           </button>
