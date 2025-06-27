@@ -1,6 +1,6 @@
 $("#cargarDatos").click(function() {
   $.ajax({
-    url: "../php/datos.php",  // tu archivo PHP
+    url: "../php/data.php",  // tu archivo PHP
     method: "GET",
     dataType: "json",  // esperamos un JSON
     success: function(data) {
